@@ -5,14 +5,24 @@ module Types
     include GraphQL::Types::Relay::HasNodesField
 
     field :users, resolver: Queries::Resolvers::Users
-    # Add root-level fields here.
-    # They will be entry points for queries on your schema.
+    field :user, UserType, "Find a user by ID" do
+      argument :id, ID
+    end
 
-    # TODO: remove me
-    field :test_field, String, null: false,
-      description: "An example field added by the generator"
-    def test_field
-      "Hello World!"
+    # ex.
+    # query getUserById($id: ID!) {
+    #   user(id: $id) {
+    #     id
+    #     name
+    #   }
+    # }
+    #
+    # QUERY VARIABLES
+    # {
+    #   "id": 1
+    # }
+    def user(id:)
+      User.find(id)
     end
   end
 end
