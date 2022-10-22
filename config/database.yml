@@ -16,12 +16,12 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: postgres  # docker-compose.ymlで指定した「POSTGRES_USER」
   password: postgres  # docker-compose.ymlで指定した「POSTGRES_PASSWORD」
-  host: localhost     # これ大事
-  port: 5433          # docker-compose.ymlで指定した「postgresのhost側のポート番号」
 
 development:
   <<: *default
   database: graphql_rails_7_sample_development
+  host: localhost     # これ大事
+  port: 5433          # docker-compose.ymlで指定した「postgresのhost側のポート番号」
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -29,6 +29,8 @@ development:
 test:
   <<: *default
   database: graphql_rails_7_sample_test
+  host: localhost     # これ大事
+  port: 5433          # docker-compose.ymlで指定した「postgresのhost側のポート番号」
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -55,3 +57,5 @@ production:
   database: graphql_rails_7_sample_production
   username: graphql_rails_7_sample
   password: <%= ENV["GRAPHQL_RAILS_7_SAMPLE_DATABASE_PASSWORD"] %>
+  host: <%= ENV["GRAPHQL_RAILS_7_SAMPLE_DATABASE_HOST"] %>
+  port: <%= ENV["GRAPHQL_RAILS_7_SAMPLE_DATABASE_PORT"] %>
