@@ -1,0 +1,31 @@
+version: '3'
+
+volumes:
+  postgres_data:
+    driver: local
+  pgadmin4_data:
+    driver: local
+
+services:
+  postgres:
+    container_name: graphql_rails_7_postgres
+    image: postgres:15.0
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5433:5432                              # host側のポート番号:dockerのポート番号 host側のポート番号は任意でよさそう
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  pgadmin4:
+    container_name: red-caddie_pgadmin4
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: postgres@postgres.local
+      PGADMIN_DEFAULT_PASSWORD: postgres
+    ports:
+      - 5481:80                                # host側のポート番号:dockerのポート番号 host側のポート番号は任意でよさそう
+    volumes:
+      - pgadmin4_data:/var/lib/pgadmin
+    depends_on:
+      - postgres
